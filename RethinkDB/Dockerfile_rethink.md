@@ -151,7 +151,7 @@ You can also find me on the web at the following:
 
 [About.me](http://about.me/johnzan)
 
-[Github](https://github.com/johnzan) Github - source for this as well as a PDF version for download
+[Github](https://github.com/johnzan) - source for this as well as a PDF version for download
 
 
 
