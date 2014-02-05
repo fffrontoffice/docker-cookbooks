@@ -139,7 +139,7 @@ Any comments/feedback please feel free to give me a shout.
 
 Thanks.
 
-johnzan at email dot com
+johnzan at gmail dot com
 
 You can also find me on the web at the following:
 
