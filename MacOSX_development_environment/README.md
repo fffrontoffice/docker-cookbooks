@@ -57,19 +57,10 @@ Check that it works.
     Client version: 0.8.0
     Go version (client): go1.2
     Git commit (client): cc3a8c8
- 
- 
- 
-xxxxxxxxxx 
- 
-    Server version: 0.8.0
-    Git commit (server): cc3a8c8
-    Go version (server): go1.2
-    [docker-dev]$
+    2014/02/08 00:08:25 dial unix /avr/run/docker.sock: no such file or directory
     
-
-
-
+The client works, but cannot connect a docker daemon. That last line is ok for now, since we don't yet have our docker instance running.
+ 
 
 #### Step 3 - Download a prepared vm box file
 
@@ -228,7 +219,7 @@ You should see output like the following:
     
 The information we are looking for is the IP address for inet in the docker0 section at the start, and in the example above the IP address is 172.17.42.1
     
-Next log out of the VM using the command exit
+Next log out of the VM using the command `exit`
 
     vagrant@ubuntu-12:~$ exit
     logout
@@ -247,7 +238,7 @@ We next need create a route on our computer to the docker vm. Basically, any tra
     #Set the docker host env parameter
     [docker-dev]$ export DOCKER_HOST=172.17.42.1
 
-    [docker-dev]$echo $DOCKER_HOST
+    [docker-dev]$ echo $DOCKER_HOST
     172.17.42.1
     [docker-dev]$
 
@@ -260,8 +251,9 @@ In this step we will change the docker daemon configuration so that it listens o
 We need to ssh into the VM and edit `/etc/init/docker.conf`
 
     [docker-dev]$ vagrant ssh
+    vagrant@ubuntu-12:~$ sudo vi /etc/init/docker.conf
     
-Edit the file by adding `-H 0.0.0.0:4243 -H unix:///var/run/docker.sock` to the start up command
+Edit the file by adding `-H 0.0.0.0:4243 -H unix:///var/run/docker.sock` to the daemon start-up command
 
 The changed file should look like the following:
 
@@ -297,6 +289,19 @@ Once you have saved the changes, close the file and exit the VM.
 Restart the VM, this will also restart the docker daemon and set it to listen on the network interfaces for connections.
 
     [docker_dev]$ vagrant reload
+    
+Now lets check the docker version again
+
+    [docker-dev]$ docker version
+    Client version: 0.8.0
+    Go version (client): go1.2
+    Git commit (client): cc3a8c8
+    Server version: 0.8.0
+    Git commit (server): cc3a8c8
+    Go version (server): go1.2
+    [docker-dev]$
+
+    
 
 #### Step 10 Run a docker container 
 Ok, lets fire up a container
@@ -305,8 +310,17 @@ The following command starts a continer and leaves you at the command prompt.
 
      [docker_dev]$ docker run -i -t ubuntu /bin/bash
 
+Again, the first time the run it will take a minute or three as it will need to download the base images for the containter, but once done all futher commands will execute within a second or less.
+ 
 Simply type `exit` to quit the contaier.
 
+There is one issue that I have yet to resolve. After executing the exit command to quit the container, I need to press the enter key twice. However, its trivial and not something thats blocking anything I need to do.
+
+
+#### Shared folders on the Virtual Machine
+The virtual machine also mounts the directory where the Vagrantfile within the VM as /vagrant
+So all files located in `[docker-dev]$` are available within the VM. Note: This is the ubuntu virtual machine, NOT the docker containers.
+  
 
 
 #### Appendix I
