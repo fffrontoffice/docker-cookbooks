@@ -39,21 +39,21 @@ Installation instructions are on the Vagrant site [here](http://docs.vagrantup.c
 Download and Install Mac OS X docker client from the [Docker web site](http)
 
 	[~]$ cd ~/docker_dev
-	[docker-dev]$ curl -o docker http://get.docker.io/builds/Darwin/x86_64/docker-latest
+	[docker_dev]$ curl -o docker http://get.docker.io/builds/Darwin/x86_64/docker-latest
 
 
 Mark it executable.
 
-    [docker-dev]$ chmod +x docker
+    [docker_dev]$ chmod +x docker
     
     
 Move the executable file to somewhere on your path.
 
-    [docker-dev]$ sudo mv docker /usr/local/bin/
+    [docker_dev]$ sudo mv docker /usr/local/bin/
 
 Check that it works.
 
-    [docker-dev]$ docker version
+    [docker_dev]$ docker version
     Client version: 0.8.0
     Go version (client): go1.2
     Git commit (client): cc3a8c8
@@ -106,7 +106,7 @@ Next, we will create a configuration file that starts up a virtual machine, and 
 
 
     [~]$ cd ~/docker_dev
-    [docker-dev]$ touch Vagrantfile
+    [docker_dev]$ touch Vagrantfile
     
 
 Copy and paste the following into the file, and save it to your docker directory, The file name _**must**_ be _**Vagrantfile**_
@@ -145,7 +145,7 @@ _**Note**_ that on line 7, `config.vm.box_url` points to your localhost and the 
 
 To launch the virtual machine simply run the command
 
-    [docker-dev]$ vagrant up
+    [docker_dev]$ vagrant up
     
 The very first time this command is executed it will take a few minutes, as the virtual machine is 
 launched and docker is installed. Subsequent runs will be quicker.
@@ -153,7 +153,7 @@ launched and docker is installed. Subsequent runs will be quicker.
 Once the virtual machine is running, we need to chcek the ip address that the docker daemon is using.
 Run the following command
 
-    [docker-dev]$ vagrant ssh
+    [docker_dev]$ vagrant ssh
     
     
 This will connect you to the virtual machine. Next execute the following command
@@ -228,7 +228,7 @@ Next log out of the VM using the command `exit`
  
 We next need create a route on our computer to the docker vm. Basically, any traffic trying to reach the docker subnet (172.17.0.0) should be routed to our new interface inside the vm (10.2.0.10)    
     
-    [docker-dev]$ sudo route -n add -net 172.17.0.0 10.2.0.10
+    [docker_dev]$ sudo route -n add -net 172.17.0.0 10.2.0.10
     
 
 
@@ -236,11 +236,11 @@ We next need create a route on our computer to the docker vm. Basically, any tra
 #### Step 7 Set environment variable for docker client
 
     #Set the docker host env parameter
-    [docker-dev]$ export DOCKER_HOST=172.17.42.1
+    [docker_dev]$ export DOCKER_HOST=172.17.42.1
 
     [docker-dev]$ echo $DOCKER_HOST
     172.17.42.1
-    [docker-dev]$
+    [docker_dev]$
 
 I'd advise that you add `DOCKER_HOST=172.17.42.1` to your bash or zsh profile so it's always set when you open a terminal session.
 
@@ -250,7 +250,7 @@ In this step we will change the docker daemon configuration so that it listens o
 
 We need to ssh into the VM and edit `/etc/init/docker.conf`
 
-    [docker-dev]$ vagrant ssh
+    [docker_dev]$ vagrant ssh
     vagrant@ubuntu-12:~$ sudo vi /etc/init/docker.conf
     
 Edit the file by adding `-H 0.0.0.0:4243 -H unix:///var/run/docker.sock` to the daemon start-up command
@@ -292,7 +292,7 @@ Restart the VM, this will also restart the docker daemon and set it to listen on
     
 Now lets check the docker version again
 
-    [docker-dev]$ docker version
+    [docker_dev]$ docker version
     Client version: 0.8.0
     Go version (client): go1.2
     Git commit (client): cc3a8c8
@@ -319,7 +319,7 @@ There is one issue that I have yet to resolve. After executing the exit command 
 
 #### Shared folders on the Virtual Machine
 The virtual machine also mounts the directory where the Vagrantfile within the VM as /vagrant
-So all files located in `[docker-dev]$` are available within the VM. Note: This is the ubuntu virtual machine, NOT the docker containers.
+So all files located in `[docke_dev]$` are available within the VM. Note: This is the ubuntu virtual machine, NOT the docker containers.
   
 
 
@@ -334,7 +334,7 @@ Vagrantfile:
 
     Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		config.vm.box = "phusion-open-ubuntu-12.04-amd64"
-	    config.vm.box_url = "http://127.0.0.1:8081/ubuntu-12.04.3-amd64-vbox.box"
+	    config.vm.box_url = "http://127.0.0.1:8080/ubuntu-12.04.3-amd64-vbox.box"
 
 		config.vm.network "private_network", ip: "10.2.0.10", netmask: "255.255.0.0"
 		config.vm.provider :virtualbox do |vb|
