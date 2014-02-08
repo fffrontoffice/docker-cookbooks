@@ -87,7 +87,7 @@ To quickly access box files locally I find it handy to use a small web server. H
 While strictly not necessary, I usually have one of these setup and running.  
 The one that I use is called Mongoose. However there are many others out there.
 
-- Mongoose - available [here]()
+- Mongoose - available [here](http://cesanta.com/downloads.html)
 
 You could also try Pow from 37Signals.
 
@@ -238,7 +238,7 @@ We next need create a route on our computer to the docker vm. Basically, any tra
     #Set the docker host env parameter
     [docker_dev]$ export DOCKER_HOST=172.17.42.1
 
-    [docker-dev]$ echo $DOCKER_HOST
+    [docker_dev]$ echo $DOCKER_HOST
     172.17.42.1
     [docker_dev]$
 
@@ -299,7 +299,7 @@ Now lets check the docker version again
     Server version: 0.8.0
     Git commit (server): cc3a8c8
     Go version (server): go1.2
-    [docker-dev]$
+    [docker_dev]$
 
     
 
