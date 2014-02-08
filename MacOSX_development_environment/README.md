@@ -139,7 +139,7 @@ Copy and paste the following into the file, and save it to your docker directory
 	end
 	## End of Vagrantfile
 
-_**Note**_ that on line 7, `config.vm.box_url` points to your localhost and the port is defaulted to 8080. If you have configured your local web service to listen on a different port you should change the setting in the Vagrantfile to use whatever you have setup.
+_**Note**_ that on line 7, `config.vm.box_url` points to your localhost and the port is defaulted to 8080. If you have configured your local web server to listen on a different port you should change the setting in the Vagrantfile to use whatever you have setup.
 
 #### Step 6 - Launch your virtual machine
 
